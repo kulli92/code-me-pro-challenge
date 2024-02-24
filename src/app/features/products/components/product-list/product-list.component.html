@@ -1,0 +1,90 @@
+<!-- Navigation Bar using PrimeNG Menubar -->
+<p-menubar [model]="items">
+  <!-- You can also add content to the left or right of the menubar using templates -->
+</p-menubar>
+
+Your Product List Component Content
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
+      <p-table
+        *ngIf="{
+          list: products,
+          columns: (tableColumnCollection$ | async) ?? []
+        } as data"
+        #dataTable
+        sortMode="single"
+        tableStyleClass="table-sm"
+        [columns]="data.columns"
+        [value]="data.list"
+      >
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th
+              *ngFor="let column of columns"
+              [pSortableColumn]="column.field !== 'action' ? column.field : ''"
+              [style.width]="column.width"
+              [attr.data-col-id]="column.field"
+              class="text-wrap text-break"
+              scope="col"
+            >
+              {{ column.header }}
+              <p-sortIcon
+                [field]="column.field"
+                [attr.data-at-id]="column.field + 'SortIcon'"
+              ></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template
+          pTemplate="body"
+          let-rowData
+          let-columns="columns"
+          let-rIndex="rowIndex"
+        >
+          <tr>
+            <td *ngFor="let column of columns" class="text-break text-wrap">
+              <span *ngIf="column.field !== 'isSelected'">
+                {{ rowData[column.field] }}
+              </span>
+              <div *ngIf="column.field === 'isSelected'">
+                <p-checkbox
+				[binary]="true"
+                 	[(ngModel)]="rowData[column.field]"
+                ></p-checkbox>
+			  </div>
+            </td>
+
+            <td></td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td
+              class="text-center font-italic"
+              data-at-id="destination-no-data"
+            >
+              {{ "No data found" }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <button
+        pButton
+        type="button"
+        label="Place Order"
+        (click)="placeOrder()"
+        class="btn btn-primary m-3"
+      >
+        Place Order
+      </button>
+    </div>
+  </div>
+</div>
