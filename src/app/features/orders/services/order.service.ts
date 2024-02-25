@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Order } from '../../../models/orders/order.model';
 import { Observable } from 'rxjs';
 import { Product } from '../../../models/products/product.model';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
