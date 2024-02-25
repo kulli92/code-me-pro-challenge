@@ -17,7 +17,6 @@ import { SubSink } from 'subsink';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent  implements OnInit, OnDestroy {
-  items: MenuItem[];
   isOrderSummary = false;
   placedOrder:Order | undefined;
 	private subs = new SubSink();
@@ -34,23 +33,7 @@ export class ProductListComponent  implements OnInit, OnDestroy {
     
     constructor(private productService: ProductService
       ,private orderService: OrderService) {
-    this.items = [
-      {
-        label: 'Home',
-        icon: 'pi pi-fw pi-home',
-        routerLink: ['/']
-      },
-      {
-        label: 'Products',
-        icon: 'pi pi-fw pi-list',
-        routerLink: ['/product-list']
-      },
-      {
-        label: 'About',
-        icon: 'pi pi-fw pi-info',
-        routerLink: ['/about']
-      }
-    ];
+    
   }
 
   ngOnInit(): void {

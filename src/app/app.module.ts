@@ -7,6 +7,7 @@ import { CoreModule } from './core/core.module';
 import { ProductsModule } from './features/products/products.module';
 import { CartModule } from './features/cart/cart.module';
 import { HttpClientModule } from '@angular/common/http';
+import { PrimeNGModule } from './shared/prime-ng/prime-ng.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
     CoreModule,
     ProductsModule,
     CartModule,
-    HttpClientModule
+    HttpClientModule,
+    PrimeNGModule
   ],
   providers: [],
   bootstrap: [AppComponent]
