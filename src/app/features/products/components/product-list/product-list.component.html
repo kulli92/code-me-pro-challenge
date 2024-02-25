@@ -1,10 +1,8 @@
-<!-- Navigation Bar using PrimeNG Menubar -->
 <p-menubar [model]="items">
-  <!-- You can also add content to the left or right of the menubar using templates -->
 </p-menubar>
 
 Your Product List Component Content
-<div class="container">
+<div class="container" *ngIf="!isOrderSummary">
   <div class="row">
     <div class="col text-center">
       <p-table
@@ -50,10 +48,10 @@ Your Product List Component Content
               </span>
               <div *ngIf="column.field === 'isSelected'">
                 <p-checkbox
-				[binary]="true"
-                 	[(ngModel)]="rowData[column.field]"
+                  [binary]="true"
+                  [(ngModel)]="rowData[column.field]"
                 ></p-checkbox>
-			  </div>
+              </div>
             </td>
 
             <td></td>
@@ -88,3 +86,6 @@ Your Product List Component Content
     </div>
   </div>
 </div>
+
+
+<app-order-details *ngIf="isOrderSummary" [order]="placedOrder"></app-order-details>

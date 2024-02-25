@@ -1,0 +1,21 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Order Details</h2>
+    
+    <div *ngIf="order">
+      <p class="text-muted">Order Date: {{order.orderDate | date: 'longDate'}}</p>
+      <h4>This order has following packages:</h4>
+      
+      <div *ngFor="let package of order.packages; let i = index" class="card mb-3">
+        <div class="card-header">
+          Package {{i + 1}}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Items: <span class="text-muted">{{package.productNames.join(', ')}}</span></h5>
+          <p class="card-text">Total weight: <span class="fw-bold">{{package.totalWeight}}g</span></p>
+          <p class="card-text">Total price: <span class="fw-bold">${{package.totalPrice}}</span></p>
+          <p class="card-text">Courier price: <span class="fw-bold">${{package.courierPrice}}</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

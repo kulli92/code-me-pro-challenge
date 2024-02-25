@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { BehaviorSubject } from 'rxjs';
 import { TableColumn } from '../../../../models/shared/table-column.models';
 import { getTableColumnCollection } from './product-list.component.config';
 import { Product } from '../../../../models/products/product.model';
 import { ProductService } from '../../services/product/product.service';
+import { OrderService } from '../../../orders/services/order.service';
+import { Order } from '../../../../models/orders/order.model';
+import { SubSink } from 'subsink';
 
 
 
@@ -13,8 +16,12 @@ import { ProductService } from '../../services/product/product.service';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent {
+export class ProductListComponent  implements OnInit, OnDestroy {
   items: MenuItem[];
+  isOrderSummary = false;
+  placedOrder:Order | undefined;
+	private subs = new SubSink();
+
 	private readonly tableColumnCollection$$: BehaviorSubject<TableColumn[]> =
 		new BehaviorSubject<TableColumn[]>([]);
    
@@ -25,7 +32,8 @@ export class ProductListComponent {
 
     ];
     
-    constructor(private productService: ProductService) {
+    constructor(private productService: ProductService
+      ,private orderService: OrderService) {
     this.items = [
       {
         label: 'Home',
@@ -55,12 +63,17 @@ export class ProductListComponent {
     });
 	}
 
-
-
+  ngOnDestroy(): void {
+		this.subs.unsubscribe();
+	}
 
   placeOrder() {
     const selectedProducts = this.products.filter(product => product.isSelected);
-
-    console.log(selectedProducts); 
+    this.subs.sink = this.orderService.placeOrder(selectedProducts).subscribe(res =>{
+      if(res){
+        this.isOrderSummary = true;
+        this.placedOrder = res;
+      }
+    });
   }
 }
