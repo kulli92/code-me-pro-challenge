@@ -3,6 +3,9 @@
     
     <div *ngIf="order">
       <p class="text-muted">Order Date: {{order.orderDate | date: 'longDate'}}</p>
+      <div class="alert alert-success" role="alert">
+        <h2>Order Was Submitted Successfully</h2>
+      </div>
       <h4>This order has following packages:</h4>
       
       <div *ngFor="let package of order.packages; let i = index" class="card mb-3">
